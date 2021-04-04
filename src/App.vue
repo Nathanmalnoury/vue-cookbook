@@ -1,30 +1,48 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <TheHeader />
+  <TheNavigationBar />
+  <div class="main">
+    <router-view />
   </div>
-  <router-view/>
 </template>
+<script>
+import TheHeader from './components/layout/TheHeader.vue';
+import TheNavigationBar from './components/layout/TheNavigationBar.vue';
 
+export default {
+  components: { TheHeader, TheNavigationBar },
+  created() {
+    this.$store.dispatch('fetchRecipe');
+  },
+};
+</script>
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  box-sizing: border-box;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+p,
+div {
+  color: $main-color;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $main-color;
+  margin: 0;
+}
+h1 {
+  font-weight: 600;
+}
+body {
+  margin: 15px;
+}
+.main {
+  margin-top: 15px;
+}
+a {
+  text-decoration: none;
 }
 </style>
