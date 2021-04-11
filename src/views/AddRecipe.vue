@@ -19,7 +19,7 @@
           <input id="dessert" type="radio" value="dessert" v-model="enteredTypeRecipe" />
           <label for="dessert">Dessert</label>
         </div>
-      <p v-if="error">{{error}}</p>
+        <p v-if="error">{{ error }}</p>
       </div>
       <button>Add recipe</button>
     </form>
@@ -42,7 +42,10 @@ export default {
         this.error = 'Url and/or type missing.';
         return;
       }
-      this.$store.dispatch('tryAddRecipe', { url: this.enteredUrl, typeRecipe: this.enteredTypeRecipe });
+      this.$store.dispatch('tryAddRecipe', {
+        url: this.enteredUrl,
+        typeRecipe: this.enteredTypeRecipe,
+      });
     },
   },
 };
@@ -64,54 +67,11 @@ $form-background-color: #f7e2f5;
       content: "❗ ";
     }
   }
-  #url-form-container {
-    width: fit-content;
-
-    .url-recipe {
-      margin-top: 5px;
-      background-color: #ffcace;
-      text-decoration: none;
-      border: none;
-      border-bottom: 3px solid #e48e94;
-      &:focus {
-        background-color: #eabdde;
-      }
-    }
-    .url-recipe-error {
-      margin-top: 5px;
-      background-color: inherit;
-      text-decoration: none;
-      border: none;
-      border-bottom: 3px solid $form-error-color;
-    }
-  }
-  #dish-radio-choices {
-    margin-top: 25px;
-    width: fit-content;
-
-    #inputs {
-      #inputs-choices-error {
-        border-bottom: 3px solid $form-error-color;
-      }
-      .label-radio {
-        padding: 5px;
-        font-size: 18px;
-        span {
-          margin-right: 5px;
-        }
-        label {
-          width: 100%;
-        }
-        &:hover {
-          color: #555092;
-        }
-      }
-    }
-  }
 }
 .form-input {
   display: flex;
   flex-direction: column;
+  flex-basis: 1 0 65px;
 }
 button {
   margin: 15px;
