@@ -6,7 +6,6 @@ from mongo import MongoClient
 from scrapper import Scrapper
 
 app = Flask(__name__)
-app.debug = True
 CORS(app, resources={r"*": {"origins": "*"}})
 mongo = MongoClient()
 
@@ -42,13 +41,13 @@ def update_recipes():
     return {}
 
 
-@app.route('/recipe/favourite', methods=["POST"])
+@app.route('/recipe/favorite', methods=["POST"])
 def change_favourite():
     data = request.get_json()
     id_ = data.get('id')
-    favourite = data.get('favourite')
+    favorite = data.get('favorite')
     recipe = mongo.get({'id': id_})[0]
-    recipe.favorite = favourite
+    recipe.favorite = favorite
     recipe.save()
     return recipe.to_json()
 

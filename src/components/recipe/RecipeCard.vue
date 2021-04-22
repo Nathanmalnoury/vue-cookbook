@@ -5,6 +5,7 @@
       <h3 class="recipe-title">{{ title }}</h3>
       <div class="icons">
         <p @click.stop="toggleModal(true)">hello</p>
+        <button @click="tryFavRecipe({id, favoriteStatus: true})">fav!</button>
         <!-- favourite icon  -->
       </div>
     </div>
@@ -24,6 +25,7 @@
 
 import DefaultModale from '@/components/layout/DefaultModale.vue';
 import FormEdit from '@/components/layout/FormEdit.vue';
+import { mapActions } from 'vuex';
 
 export default {
   components: { FormEdit, DefaultModale },
@@ -40,8 +42,12 @@ export default {
       }
       return 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png';
     },
+    isFavorite() {
+      return this.$store.getters.isRecipeStarred(this.id);
+    },
   },
   methods: {
+    ...mapActions(['tryFavRecipe']),
     openInBrowser() {
       const apiUrl = this.$http.defaults.baseURL;
       console.log(apiUrl, this.id);
@@ -53,6 +59,7 @@ export default {
       this.modaleOpened = isOpen;
     },
   },
+
 };
 </script>
 <style lang="scss" scoped>

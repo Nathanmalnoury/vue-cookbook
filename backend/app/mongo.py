@@ -1,7 +1,7 @@
-import json
 import base64
-import sys
+import json
 from io import BytesIO
+
 from mongoengine import connect
 
 from models.recipe import Recipe
@@ -16,9 +16,9 @@ class MongoClient:
         info = dict(id=str(rec.id), title=rec.title, type_recipe=rec.type_recipe, favorite=rec.favorite)
         if rec.image:
             info["image"] = {
-                    "content": base64.b64encode(rec.image.read()).decode("utf-8"),
-                    "content-type": rec.image.content_type
-                }
+                "content": base64.b64encode(rec.image.read()).decode("utf-8"),
+                "content-type": rec.image.content_type
+            }
         return info
 
     def get_all_recipes(self):

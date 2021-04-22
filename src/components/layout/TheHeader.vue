@@ -24,6 +24,7 @@
       content: "🍜";
       padding-right: 50px;
     }
+    min-height: 64px;
   }
   #icon-container {
     display: flex;
