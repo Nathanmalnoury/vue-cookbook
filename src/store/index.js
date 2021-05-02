@@ -95,7 +95,6 @@ export default createStore({
     },
     isRecipeStarred(state) {
       return (id) => {
-        console.log(state.recipes);
         const rec = state.recipes.find((recipe) => recipe.id === id);
         return rec.favorite;
       };
