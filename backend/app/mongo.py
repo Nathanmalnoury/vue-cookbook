@@ -1,23 +1,31 @@
 import base64
 import json
+import logging
+import os
 from io import BytesIO
 
-from mongoengine import connect
+import mongoengine
 
 from models.recipe import Recipe
 
 
 class MongoClient:
     def __init__(self):
-        self.client = connect('recipe')
+        print(os.getenv("mongo-host"))
+        self.client = mongoengine.connect("recipe", host=os.getenv("mongo-host"))
 
     @staticmethod
     def _recipe_to_dict(rec):
-        info = dict(id=str(rec.id), title=rec.title, type_recipe=rec.type_recipe, favorite=rec.favorite)
+        info = dict(
+            id=str(rec.id),
+            title=rec.title,
+            type_recipe=rec.type_recipe,
+            favorite=rec.favorite,
+        )
         if rec.image:
             info["image"] = {
                 "content": base64.b64encode(rec.image.read()).decode("utf-8"),
-                "content-type": rec.image.content_type
+                "content-type": rec.image.content_type,
             }
         return info
 
@@ -84,10 +92,10 @@ class MongoClient:
             for field, new_val in changes.items():
                 if field == "image":
                     try:
-                        image_file = BytesIO(
-                            new_val["content"].encode("utf-8"))
-                        r.image.replace(image_file,
-                                        content_type=new_val["content-type"])
+                        image_file = BytesIO(new_val["content"].encode("utf-8"))
+                        r.image.replace(
+                            image_file, content_type=new_val["content-type"]
+                        )
                     except Exception as e:
                         print(e.__class__, e)
                         raise e

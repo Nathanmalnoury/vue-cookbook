@@ -14,14 +14,16 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class Scrapper():
+class Scrapper:
     """Role is to scrap various recipe websites."""
+
     headers = requests.utils.default_headers()
-    headers.update({
-        'User-Agent':
-        'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)'
-        ' Chrome/51.0.2704.103 Safari/537.36'
-    })
+    headers.update(
+        {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)"
+            " Chrome/51.0.2704.103 Safari/537.36"
+        }
+    )
 
     def __init__(self, url: str, type_recipe: str):
         self.type_recipe = type_recipe
@@ -54,7 +56,7 @@ class Scrapper():
         try:
             title = self.find_title()
         except Exception:
-            print('Exception in find title')
+            print("Exception in find title")
             title = None
 
         try:
@@ -82,35 +84,40 @@ class Scrapper():
         def title_finder(css_class):
             if css_class is None:
                 return False
-            elif (css_class.find('recipe') != -1
-                  and css_class.find('title') != -1
-                  and css_class.find('related') == -1):
+            elif (
+                css_class.find("recipe") != -1
+                and css_class.find("title") != -1
+                and css_class.find("related") == -1
+            ):
                 return True
             else:
                 return False
 
         for tag_title in self.get_soup().find_all(class_=title_finder):
             if tag_title.text is not None:
-                print(f'found title: \'{tag_title.text.strip()}\'')
+                print(f"found title: '{tag_title.text.strip()}'")
                 return tag_title.text.strip()
 
     def find_image_src(self, title_recipe):
         if title_recipe is None:
-            return self.get_soup().find('img').src
+            return self.get_soup().find("img").src
 
-        for tag in self.get_soup().find_all('img'):
-            if tag.get('alt').strip() == title_recipe or tag.get('title').strip() == title_recipe:
-                src = urljoin(self.url, tag.get('src'))
+        for tag in self.get_soup().find_all("img"):
+            if (
+                tag.get("alt").strip() == title_recipe
+                or tag.get("title").strip() == title_recipe
+            ):
+                src = urljoin(self.url, tag.get("src"))
                 return src
 
-        print('Could not find the image')
+        print("Could not find the image")
         return None
 
     def get_image_type(self, image_url):
         ext_to_type = {
-            "JPG": 'image/jpeg',
-            "JPEG": 'image/jpeg',
-            "PNG": 'image/png',
+            "JPG": "image/jpeg",
+            "JPEG": "image/jpeg",
+            "PNG": "image/png",
             "GIF": "image/gif",
             "SVG": "image/svg",
             "BMP": "image/bmp",
@@ -134,16 +141,16 @@ class Scrapper():
         - `http://website` remain untouched
         """
         counters = {
-            'need_http': 0,
-            'need_website_main_url': 0,
-            'properly_formatted': 0.
+            "need_http": 0,
+            "need_website_main_url": 0,
+            "properly_formatted": 0.0,
         }
         for tag in soup.find_all(href=True):
-            tag['href'] = urljoin(url, tag.get('href'))
+            tag["href"] = urljoin(url, tag.get("href"))
             tag.replace_with(tag)
 
         for tag in soup.find_all(src=True):
-            tag['src'] = urljoin(url, tag.get('src'))
+            tag["src"] = urljoin(url, tag.get("src"))
             tag.replace_with(tag)
 
         return soup
