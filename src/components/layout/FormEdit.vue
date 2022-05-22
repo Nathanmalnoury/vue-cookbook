@@ -31,7 +31,7 @@ export default {};
 .button-holder {
   margin-top: 64px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   button {
     margin: 8px;
   }

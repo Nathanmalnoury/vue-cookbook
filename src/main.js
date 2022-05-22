@@ -5,7 +5,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-axios.defaults.baseURL = 'http://localhost:5300';
+axios.defaults.baseURL = 'http://0.0.0.0:8000';
 
 const app = createApp(App);
 app.use(store);

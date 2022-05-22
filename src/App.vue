@@ -1,8 +1,8 @@
 <template>
-  <TheHeader />
-  <TheNavigationBar />
+  <TheHeader/>
+  <TheNavigationBar/>
   <div class="main">
-    <router-view />
+    <router-view/>
   </div>
 </template>
 <script>
@@ -20,10 +20,12 @@ export default {
 * {
   box-sizing: border-box;
 }
+
 p,
 div {
   color: $main-color;
 }
+
 h1,
 h2,
 h3,
@@ -33,15 +35,19 @@ h6 {
   color: $main-color;
   margin: 0;
 }
+
 h1 {
   font-weight: 600;
 }
+
 body {
   margin: 15px;
 }
+
 .main {
   margin-top: 15px;
 }
+
 a {
   text-decoration: none;
 }
