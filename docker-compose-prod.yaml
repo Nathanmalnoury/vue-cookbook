@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  mongo:
+    image: "mongo:3.6"
+    ports:
+      - "27017:27017"
+    volumes:
+      - /data:/data/db
+  app:
+    environment:
+      PORT: 8080
+      mongo-host: mongo
+    volumes:
+      - ./backend/app:/app
+    ports:
+      - "8000:8080"
+    build:
+      context: "backend"
+    depends_on:
+      - mongo
+
+  frontend-prod:
+    build:
+      context: "frontend"
+      dockerfile: Dockerfile-prod
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "80:80"
+    depends_on:
+      - app
