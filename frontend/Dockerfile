@@ -6,4 +6,4 @@ COPY package*.json ./
 RUN npm install
 WORKDIR /app
 CMD "npm run build"
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["npm", "run", "serve"]

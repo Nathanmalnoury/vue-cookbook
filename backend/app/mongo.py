@@ -12,7 +12,9 @@ from models.recipe import Recipe
 class MongoClient:
     def __init__(self):
         print(os.getenv("mongo-host"))
-        self.client = mongoengine.connect("recipe", host=os.getenv("mongo-host"))
+        self.client = mongoengine.connect(
+            "recipe", host=os.getenv("mongo-host"), port=int(os.getenv("mongo-port"))
+        )
 
     @staticmethod
     def _recipe_to_dict(rec):

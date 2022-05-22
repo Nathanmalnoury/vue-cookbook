@@ -3,11 +3,12 @@ services:
   mongo:
     image: "mongo:3.6"
     ports:
-      - "27017:27017"
+      - "27018:27017"
   app:
     environment:
       PORT: 8080
       mongo-host: mongo
+      mongo-port: 27018
     volumes:
       - ./backend/app:/app
     ports:
