@@ -1,0 +1,19 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_language_version:
+    python: python3.8
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-json
+        exclude: ^(es_settings/(cluster_settings.json|xq_index_settings.json|xq_index_mapping.json)|app/notes/treva_json_settings/inpi_treva_settings.json)$
+
+-   repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+    - id: black
