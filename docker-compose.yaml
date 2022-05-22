@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  mongo:
+    image: "mongo:3.6"
+    ports:
+      - "27017:27017"
+  app:
+    environment:
+      PORT: 8080
+      mongo-host: mongo
+    volumes:
+      - ./backend/app:/app
+    ports:
+      - "8000:8080"
+    build:
+      context: "backend"
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: "frontend"
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app
