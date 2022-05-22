@@ -4,3 +4,15 @@ services:
     image: "mongo:3.6"
     ports:
       - "27017:27017"
+  app:
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      mongo-host: mongo
+    volumes:
+      - ./app:/app
+    build:
+      context: "."
+    depends_on:
+      - mongo
