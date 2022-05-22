@@ -53,4 +53,7 @@ $light-color: #fdf6f2;
   color: $main-color;
   font-family: $main-font;
   font-weight: 500;
+  &:hover{
+    box-shadow: 4px 4px darken($shadow-color, 15)
+  }
 }

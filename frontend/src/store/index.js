@@ -33,6 +33,14 @@ export default createStore({
     setSuccess(state, success) {
       state.success = success;
     },
+    setFavoriteStatus(state, { recipeId, favorite }) {
+      state.recipes = state.recipes.map((value) => {
+        if (value.id === recipeId) {
+          return { ...value, favorite };
+        }
+        return value;
+      });
+    },
   },
   actions: {
     async fetchRecipe(context) {
@@ -64,22 +72,19 @@ export default createStore({
     },
     async tryFavRecipe(context, payload) {
       const { id, favoriteStatus } = payload;
-      axios.post('/recipe/favorite', { id, favorite: favoriteStatus });
-      // const recipes = context.getters.getRecipes;
-      // throw TypeError('todo');
-      // recipes.map((recipe) => {
-      //   if (recipe.id === id) {
-      //     // eslint-disable-next-line no-param-reassign
-      //     recipe.favorite = true;
-      //   }
-      //   return recipe;
-      // });
+      await axios.post('/recipe/favorite', { id, favorite: favoriteStatus });
+      context.commit('setFavoriteStatus', { recipeId: id, favorite: favoriteStatus });
     },
   },
   modules: {},
   getters: {
     getRecipes(state) {
-      return state.recipes;
+      return state.recipes.sort((a, b) => {
+        if (a.favorite !== b.favorite) {
+          return a.favorite < b.favorite;
+        }
+        return a.title.localeCompare(b.title);
+      });
     },
     isAddingRecipe(state) {
       return state.addingRecipe;
